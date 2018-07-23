@@ -13,14 +13,12 @@ export abstract class Command {
     public abstract get description(): string;
 
     protected addOption(
-        short: string,
-        long: string,
+        flag: string,
         description: string,
-        defaultValue: any) {
+        defaultValue?: any) {
 
             const option: Option = {
-                short,
-                long,
+                flag,
                 description,
                 defaultValue,
             };

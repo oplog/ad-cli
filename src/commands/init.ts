@@ -4,7 +4,6 @@ export class InitCommand extends Command {
 
     constructor() {
         super();
-        this.addOption("-p", "--path [value]", "path to install web app template", __dirname);
     }
 
     public get alias(): string {

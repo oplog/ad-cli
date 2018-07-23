@@ -1,6 +1,7 @@
 import path from "path";
 
-export const templatesFolder = path.join(".", "templates");
+export const cwd = process.cwd();
+export const templatesFolder = path.join(__dirname, "templates");
 export const templatePaths = {
     app: path.join(templatesFolder, "app"),
     components: {

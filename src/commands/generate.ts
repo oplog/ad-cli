@@ -4,7 +4,6 @@ export class GenerateCommand extends Command {
 
     constructor() {
         super();
-        this.addOption("-p", "--path [value]", "path to install web app template", __dirname);
     }
 
     public get alias(): string {
@@ -12,7 +11,7 @@ export class GenerateCommand extends Command {
     }
 
     public get name(): string {
-        return "generate";
+        return "generate [name]";
     }
 
     public get description(): string {
@@ -20,8 +19,7 @@ export class GenerateCommand extends Command {
     }
 
     public action = (args: any[]) => {
-        // console.log(args);
-        // console.log("[generated started]");
+        console.log(`generate -> action`);
     }
 
 }
