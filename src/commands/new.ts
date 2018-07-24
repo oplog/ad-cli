@@ -3,6 +3,7 @@ import * as path from "path";
 import { Command } from "../command";
 import { cwd, templatePaths } from "../paths";
 import { exec } from "child_process";
+import { logger } from "../logger";
 
 export class NewCommand extends Command {
 
@@ -31,20 +32,24 @@ export class NewCommand extends Command {
 
         appPath = path.join(appPath, name);
 
-        console.log(`name: ${name}`);
-        console.log(`app path: ${appPath}`);
+        logger.debug(`name: ${name}`);
+        logger.debug(`app path: ${appPath}`);
 
-        console.log("Creating app...");
-        console.log(`src: ${templatePaths.app}`);
-        console.log(`dest: ${appPath}`);
+        logger.info("Creating app..");
+        logger.debug(`src: ${templatePaths.app}`);
+        logger.debug(`dest: ${appPath}`);
+
+        if (fs.existsSync(appPath)) {
+            logger.error(`Path: ${appPath} already exists. Could not create app`);
+            return;
+        }
 
         fs.copySync(templatePaths.app, appPath);
 
-        const pathExists = fs.existsSync(appPath);
-        if (pathExists) {
-            exec("npm ")
+        if (fs.existsSync(appPath)) {
+            logger.info("App created successfully.");
         } else {
-            console.error("Could not create app");
+            logger.error("App cannot be created.");
         }
     }
 
