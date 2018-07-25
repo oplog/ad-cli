@@ -1,3 +1,3 @@
-export * from "./generate";
+export * from "./generate-atom";
 export * from "./init";
 export * from "./new";

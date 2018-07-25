@@ -12,3 +12,9 @@ export const templatePaths = {
         template: path.join(templatesFolder, "components", "template"),
     },
 };
+
+export const targetPaths = {
+    components: {
+        atom: path.join(cwd, "src", "components", "atoms"),
+    },
+};

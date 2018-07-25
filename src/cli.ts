@@ -3,7 +3,7 @@
 import program from "commander";
 import { Command } from "./command";
 import {
-    GenerateCommand,
+    GenerateAtomCommand,
     InitCommand,
     NewCommand,
 } from "./commands";
@@ -13,7 +13,7 @@ const VERSION = "0.1.0";
 const commands: Command[] = [
   new NewCommand(),
   new InitCommand(),
-  new GenerateCommand(),
+  new GenerateAtomCommand(),
 ];
 
 program.version(VERSION);

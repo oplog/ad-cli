@@ -1,5 +1,9 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
@@ -7,6 +11,7 @@
     ]
   },
   "rules": {
-    "interface-name": false
+    "interface-name": false,
+    "no-empty-interface": false
   }
 }
