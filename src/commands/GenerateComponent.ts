@@ -37,6 +37,8 @@ export class GenerateComponentCommand extends Command {
 
         logger.info(`Generating ${this.type} component..`);
 
+        // TODO: Add check for duplicate component name
+
         const componentExportFolderPath = path.join(
             targetPaths.components,
             `${this.type}s`,

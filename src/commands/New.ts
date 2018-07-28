@@ -50,6 +50,8 @@ export class NewCommand extends Command {
         } else {
             logger.error("App cannot be created.");
         }
+
+        // TODO: Add npm install script on project folder
     }
 
 }
