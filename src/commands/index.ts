@@ -1,3 +1,3 @@
-export * from "./generate-atom";
-export * from "./init";
-export * from "./new";
+export * from "./GenerateComponent";
+export * from "./Init";
+export * from "./New";

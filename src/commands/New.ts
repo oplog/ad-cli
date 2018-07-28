@@ -1,9 +1,8 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { Command } from "../command";
-import { cwd, templatePaths } from "../paths";
-import { exec } from "child_process";
 import { logger } from "../logger";
+import { cwd, templatePaths } from "../paths";
 
 export class NewCommand extends Command {
 
