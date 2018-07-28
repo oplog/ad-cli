@@ -3,6 +3,7 @@ import * as path from "path";
 import { Command } from "../command";
 import { logger } from "../logger";
 import { cwd, templatePaths } from "../paths";
+import { exec } from "child_process";
 
 export class NewCommand extends Command {
 
@@ -51,7 +52,21 @@ export class NewCommand extends Command {
             logger.error("App cannot be created.");
         }
 
-        // TODO: Add npm install script on project folder
+        logger.info("Installing dependencies...");
+
+        exec("npm install", { cwd: appPath }, (error, stdout, stderr) => {
+            if (error) {
+                logger.error(error);
+            }
+
+            logger.info(stdout);
+
+            if (stderr) {
+                logger.error(stderr);
+            }
+
+            logger.info("Done.");
+        });
     }
 
 }
