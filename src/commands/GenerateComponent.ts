@@ -28,7 +28,7 @@ export class GenerateComponentCommand extends Command {
     }
 
     public get description(): string {
-        return `generates an ${this.type} component`;
+        return `generates a(n) ${this.type} component`;
     }
 
     public action = (name: string) => {
