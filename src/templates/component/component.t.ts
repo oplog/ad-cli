@@ -2,10 +2,6 @@ export interface ComponentTemplateParams {
   componentName: string;
 }
 
-export function generateExport(params: ComponentTemplateParams): string {
-  return `\nexport * from "./${params.componentName}";\n`;
-}
-
 export function generateComponent(params: ComponentTemplateParams): string {
   return (
     `
