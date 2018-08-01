@@ -1,11 +1,13 @@
+import { uppercase } from "../string.utils";
+
 export function generateConstants(name: string) {
     return (
         `
-export const SET_${name} = "SET_${name}";
-export type SET_${name} = typeof SET_${name};
+export const SET_${uppercase(name)}: string = "SET_${uppercase(name)}";
+export type SET_${uppercase(name)} = typeof SET_${uppercase(name)};
 
-export const REMOVE_${name} = "REMOVE_${name}";
-export type REMOVE_${name} = typeof REMOVE_${name};
+export const REMOVE_${uppercase(name)}: string = "REMOVE_${uppercase(name)}";
+export type REMOVE_${uppercase(name)} = typeof REMOVE_${uppercase(name)};
 `
     );
 }

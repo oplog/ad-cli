@@ -3,7 +3,8 @@ import * as path from "path";
 import { Command } from "../command";
 import { logger } from "../logger";
 import { targetPaths } from "../paths";
-import { generateComponent, generateExport } from "../templates/component";
+import { generateComponent } from "../templates/component";
+import { generateExport } from "../templates/export.t";
 
 export type ComponentType = (
     "atom" |
@@ -33,7 +34,7 @@ export class GenerateComponentCommand extends Command {
 
     public action = (name: string) => {
         const componentCode = generateComponent({componentName: name});
-        const exportCode = generateExport({componentName: name});
+        const exportCode = generateExport(name);
 
         logger.info(`Generating ${this.type} component..`);
 

@@ -3,7 +3,7 @@ import { capitalize, uppercase } from "../string.utils";
 export function generateActions(name: string) {
     return (
 `
-import * as constants from "./constants.t";
+import * as constants from "./constants";
 
 export interface Set${capitalize(name)} {
     type: constants.SET_${uppercase(name)};
@@ -18,8 +18,8 @@ export type ${capitalize(name)}Action = Set${capitalize(name)} | Remove${capital
 
 export function set${capitalize(name)}(payload: any): Set${capitalize(name)} {
     return {
-        type: constants.SET_${uppercase(name)},
         payload,
+        type: constants.SET_${uppercase(name)},
     };
 }
 

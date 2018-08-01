@@ -5,6 +5,7 @@ export const templatesFolder = path.join(__dirname, "..", "src", "templates");
 export const templatePaths = {
     app: path.join(templatesFolder, "app"),
     components: path.join(templatesFolder, "components"),
+    store: path.join(templatesFolder, "store"),
     // components: {
     //     atom: path.join(templatesFolder, "components", "atom"),
     //     molecule: path.join(templatesFolder, "components", "molecule"),
@@ -16,4 +17,5 @@ export const templatePaths = {
 
 export const targetPaths = {
     components: path.join(cwd, "src", "components"),
+    store: path.join(cwd, "src", "store"),
 };

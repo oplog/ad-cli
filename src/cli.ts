@@ -7,6 +7,7 @@ import {
     InitCommand,
     NewCommand,
 } from "./commands";
+import { GenerateStoreCommand } from "./commands/GenerateStore";
 
 const VERSION = "0.1.0";
 
@@ -18,6 +19,7 @@ const commands: Command[] = [
   new GenerateComponentCommand("organism"),
   new GenerateComponentCommand("template"),
   new GenerateComponentCommand("page"),
+  new GenerateStoreCommand(),
 ];
 
 program.version(VERSION);
