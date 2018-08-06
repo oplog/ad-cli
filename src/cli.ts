@@ -7,6 +7,7 @@ import {
     InitCommand,
     NewCommand,
 } from "./commands";
+import { GenerateContainerCommand } from "./commands/GenerateContainer";
 import { GenerateStoreCommand } from "./commands/GenerateStore";
 
 const VERSION = "0.1.0";
@@ -20,6 +21,7 @@ const commands: Command[] = [
   new GenerateComponentCommand("template"),
   new GenerateComponentCommand("page"),
   new GenerateStoreCommand(),
+  new GenerateContainerCommand(),
 ];
 
 program.version(VERSION);
