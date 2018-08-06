@@ -43,14 +43,14 @@ export class GenerateComponentCommand extends Command {
         const componentExportFolderPath = path.join(
             targetPaths.components,
             `${this.type}s`,
-            "index.tsx",
+            "index.ts",
         );
 
         const componentExportFilePath = path.join(
             targetPaths.components,
             `${this.type}s`,
             name,
-            "index.tsx",
+            "index.ts",
         );
 
         const componentFilePath = path.join(

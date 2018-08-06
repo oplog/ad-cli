@@ -23,9 +23,7 @@ export class ${params.componentName} extends React.Component<${params.componentN
 
   public render() {
     return (
-      <div>
-
-      </div>
+      <div />
     );
   }
 }
