@@ -1,4 +1,4 @@
-import { Option } from "./option";
+import { Option } from "./Option";
 
 export abstract class Command {
 

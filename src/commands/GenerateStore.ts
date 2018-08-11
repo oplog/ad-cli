@@ -1,6 +1,5 @@
 import fs from "fs-extra";
 import * as path from "path";
-import { Command } from "../command";
 import { logger } from "../logger";
 import { targetPaths } from "../paths";
 import { generateExport } from "../templates/export.t";
@@ -8,6 +7,7 @@ import { generateActions } from "../templates/store/actions.t";
 import { generateConstants } from "../templates/store/constants.t";
 import { generateReducer } from "../templates/store/reducer.t";
 import { generateSaga } from "../templates/store/saga.t";
+import { Command } from "./Command";
 
 export class GenerateStoreCommand extends Command {
 

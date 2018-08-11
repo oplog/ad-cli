@@ -1,11 +1,11 @@
 import * as fs from "fs-extra";
 import * as path from "path";
-import { Command } from "../command";
 import { logger } from "../logger";
 import { targetPaths } from "../paths";
 import { generateContainer } from "../templates/container";
 import { generateExport } from "../templates/export.t";
 import { capitalize } from "../templates/string.utils";
+import { Command } from "./Command";
 
 export class GenerateContainerCommand extends Command {
 

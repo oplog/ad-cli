@@ -1,10 +1,10 @@
 import * as fs from "fs-extra";
 import * as path from "path";
-import { Command } from "../command";
 import { logger } from "../logger";
 import { targetPaths } from "../paths";
 import { generateComponent } from "../templates/component";
 import { generateExport } from "../templates/export.t";
+import { Command } from "./Command";
 
 export type ComponentType = (
     "atom" |

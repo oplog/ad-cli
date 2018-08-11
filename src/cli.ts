@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 import program from "commander";
-import { Command } from "./command";
 import {
     GenerateComponentCommand,
     InitCommand,
     NewCommand,
 } from "./commands";
+import { Command } from "./commands/Command";
 import { GenerateContainerCommand } from "./commands/GenerateContainer";
 import { GenerateStoreCommand } from "./commands/GenerateStore";
 
