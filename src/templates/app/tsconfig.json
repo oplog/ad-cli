@@ -16,7 +16,21 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "paths": {
+      "@components": [
+        "src/components"
+      ],
+      "@containers/*": [
+        "src/containers/*"
+      ],
+      "@store": [
+        "src/store/index"
+      ],
+      "@store/*": [
+        "src/store/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules",
