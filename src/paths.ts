@@ -12,16 +12,6 @@ export const templatePaths = {
     store: path.join(templatesFolder, "store"),
 };
 
-export const targetPaths = {
-    components: path.join(cwd, "src", "components"),
-    store: path.join(cwd, "src", "store"),
-    containers: path.join(cwd, "src", "containers"),
-};
-
-export const testPath = path.join(cwd, "__tests__");
-
-export const configPath = path.join(cwd, "ad-cli.config.json");
-
 export function pathExists(p: string): boolean {
     return fs.existsSync(p);
 }

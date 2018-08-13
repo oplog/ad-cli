@@ -1,5 +1,6 @@
+import * as path from "path";
 import { logger } from "../logger";
-import { configPath, pathExists } from "../paths";
+import { pathExists } from "../paths";
 import { Option } from "./Option";
 
 export abstract class Command {
@@ -14,7 +15,8 @@ export abstract class Command {
 
     public abstract get description(): string;
 
-    protected checkRequiredFiles(): boolean {
+    protected checkRequiredFiles(appPath: string): boolean {
+        const configPath = path.join(appPath, "ad-cli.config.json");
         if (pathExists(configPath)) {
             return true;
         }

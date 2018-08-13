@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import * as path from "path";
 import { logger } from "../logger";
-import { pathExists, targetPaths, testPath } from "../paths";
+import { cwd, pathExists } from "../paths";
 import { generateExport } from "../templates/export.t";
 import { generateActions, generateActionsTest } from "../templates/store/actions.t";
 import { generateConstants } from "../templates/store/constants.t";
@@ -16,6 +16,7 @@ export class GenerateStoreCommand extends Command {
 
     constructor() {
         super();
+        this.addOption("-p --path <path>", "path of the project", cwd);
     }
 
     public get alias(): string {
@@ -30,16 +31,22 @@ export class GenerateStoreCommand extends Command {
         return `generates a(n) store with constants, actions, reducer & saga`;
     }
 
-    public action = (name: string) => {
+    public action = (name: string, options: any) => {
+
+        let appPath: string = options.path || cwd;
+        if (!path.isAbsolute(appPath)) {
+            appPath = path.join(cwd, appPath);
+        }
 
         const storeName = lowerize(name);
 
-        if (!this.checkRequiredFiles()) {
+        if (!this.checkRequiredFiles(appPath)) {
             return;
         }
 
         // Check if store folder previously exists
-        const storeFolder = path.join(targetPaths.store, storeName);
+        const storeFolder = path.join(appPath, "src", "store", storeName);
+        const storeTestFolder = path.join(appPath, "__tests__", "store", storeName);
         if (pathExists(storeFolder)) {
             logger.error(`Store folder already exists at ${storeFolder}`);
             return;
@@ -58,46 +65,46 @@ export class GenerateStoreCommand extends Command {
             constants: {
                 src: generateConstants(storeName),
                 export: generateExport("constants"),
-                srcTargetPath: path.join(targetPaths.store, storeName, "constants.ts"),
-                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
+                srcTargetPath: path.join(storeFolder, "constants.ts"),
+                exportTargetPath: path.join(storeFolder, "index.ts"),
             },
             actions: {
                 src: generateActions(storeName),
                 test: generateActionsTest(storeName),
                 export: generateExport("actions"),
-                srcTargetPath: path.join(targetPaths.store, storeName, "actions.ts"),
-                testTargetPath: path.join(testPath, "store", storeName, "actions.test.ts"),
-                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
+                srcTargetPath: path.join(storeFolder, "actions.ts"),
+                testTargetPath: path.join(storeTestFolder, "actions.test.ts"),
+                exportTargetPath: path.join(storeFolder, "index.ts"),
             },
             reducer: {
                 src: generateReducer(storeName),
                 test: generateReducerTest(storeName),
                 export: generateExport("reducer"),
-                srcTargetPath: path.join(targetPaths.store, storeName, "reducer.ts"),
-                testTargetPath: path.join(testPath, "store", storeName, "reducer.test.ts"),
-                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
+                srcTargetPath: path.join(storeFolder, "reducer.ts"),
+                testTargetPath: path.join(storeTestFolder, "reducer.test.ts"),
+                exportTargetPath: path.join(storeFolder, "index.ts"),
             },
             saga: {
                 src: generateSaga(storeName),
                 test: generateSagaTest(storeName),
                 export: generateExport("actions"),
-                srcTargetPath: path.join(targetPaths.store, storeName, "saga.ts"),
-                testTargetPath: path.join(testPath, "store", storeName, "saga.test.ts"),
-                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
+                srcTargetPath: path.join(storeFolder, "saga.ts"),
+                testTargetPath: path.join(storeTestFolder, "saga.test.ts"),
+                exportTargetPath: path.join(storeFolder, "index.ts"),
             },
             selectors: {
                 src: generateSelectors(storeName),
                 test: generateSelectorTests(storeName),
                 export: generateExport("selectors"),
-                srcTargetPath: path.join(targetPaths.store, storeName, "selectors.ts"),
-                testTargetPath: path.join(testPath, "store", storeName, "selectors.test.ts"),
-                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
+                srcTargetPath: path.join(storeFolder, "selectors.ts"),
+                testTargetPath: path.join(storeTestFolder, "selectors.test.ts"),
+                exportTargetPath: path.join(storeFolder, "index.ts"),
             },
             types: {
                 src: generateTypes(storeName),
                 export: generateExport("types"),
-                srcTargetPath: path.join(targetPaths.store, storeName, "types.ts"),
-                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
+                srcTargetPath: path.join(storeFolder, "types.ts"),
+                exportTargetPath: path.join(storeFolder, "index.ts"),
             },
         };
 

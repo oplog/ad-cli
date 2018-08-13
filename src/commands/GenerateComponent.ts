@@ -1,7 +1,7 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { logger } from "../logger";
-import { pathExists, targetPaths, testPath } from "../paths";
+import { cwd, pathExists } from "../paths";
 import { generateComponent, generateComponentTest } from "../templates/component";
 import { generateExport } from "../templates/export.t";
 import { capitalize } from "../templates/string.utils";
@@ -19,6 +19,7 @@ export class GenerateComponentCommand extends Command {
 
     constructor(private type: ComponentType) {
         super();
+        this.addOption("-p --path <path>", "path of the project", cwd);
     }
 
     public get alias(): string {
@@ -33,11 +34,17 @@ export class GenerateComponentCommand extends Command {
         return `generates a(n) ${this.type} component`;
     }
 
-    public action = (name: string) => {
+    public action = (name: string, options: any) => {
+        let appPath: string = options.path || cwd;
+        if (!path.isAbsolute(appPath)) {
+            appPath = path.join(cwd, appPath);
+        }
 
+        const componentsPath = path.join(appPath, "src", "components");
+        const componentTestPath = path.join(appPath, "__tests__");
         const componentName = capitalize(name);
 
-        if (!this.checkRequiredFiles()) {
+        if (!this.checkRequiredFiles(appPath)) {
             return;
         }
 
@@ -45,25 +52,25 @@ export class GenerateComponentCommand extends Command {
             componentCode: generateComponent({ componentName }),
             componentTestCode: generateComponentTest({ componentName }),
             componentTestFilePath: path.join(
-                testPath,
+                componentTestPath,
                 "components",
                 `${this.type}s`,
                 `${componentName}.test.tsx`,
             ),
             exportCode: generateExport(componentName),
             exportFolderPath: path.join(
-                targetPaths.components,
+                componentsPath,
                 `${this.type}s`,
                 "index.ts",
             ),
             exportFilePath: path.join(
-                targetPaths.components,
+                componentsPath,
                 `${this.type}s`,
                 componentName,
                 "index.ts",
             ),
             componentFilePath: path.join(
-                targetPaths.components,
+                componentsPath,
                 `${this.type}s`,
                 componentName,
                 `${componentName}.tsx`,

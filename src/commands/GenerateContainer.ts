@@ -1,13 +1,18 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { logger } from "../logger";
-import { pathExists, targetPaths, testPath } from "../paths";
+import { cwd, pathExists } from "../paths";
 import { generateContainer, generateContainerTest } from "../templates/container";
 import { generateExport } from "../templates/export.t";
 import { capitalize } from "../templates/string.utils";
 import { Command } from "./Command";
 
 export class GenerateContainerCommand extends Command {
+
+    constructor() {
+        super();
+        this.addOption("-p --path <path>", "path of the project", cwd);
+    }
 
     public get alias(): string {
         return `g:container`;
@@ -21,38 +26,44 @@ export class GenerateContainerCommand extends Command {
         return `generates a(n) container`;
     }
 
-    public action = (name: string) => {
+    public action = (name: string, options: any) => {
 
-        if (!this.checkRequiredFiles()) {
+        let appPath: string = options.path || cwd;
+        if (!path.isAbsolute(appPath)) {
+            appPath = path.join(cwd, appPath);
+        }
+
+        if (!this.checkRequiredFiles(appPath)) {
             return;
         }
 
+        const containersPath = path.join(appPath, "src", "containers");
         const containerCode = generateContainer({ containerName: name });
         const containerTestCode = generateContainerTest({ containerName: name });
+        const containerTestPath = path.join(appPath, "__tests__", "containers");
         const exportCode = generateExport(`${capitalize(name)}Container`);
 
-        logger.info(`Generating ${name} container ..`);
+        logger.info(`Generating ${name} container..`);
 
         const containerExportFolderPath = path.join(
-            targetPaths.containers,
+            containersPath,
             "index.ts",
         );
 
         const containerExportFilePath = path.join(
-            targetPaths.containers,
+            containersPath,
             `${capitalize(name)}Container`,
             "index.ts",
         );
 
         const containerFilePath = path.join(
-            targetPaths.containers,
+            containersPath,
             `${capitalize(name)}Container`,
             `${capitalize(name)}Container.tsx`,
         );
 
         const containerTestFilePath = path.join(
-            testPath,
-            "containers",
+            containerTestPath,
             `${capitalize(name)}Container.test.tsx`,
         );
 
