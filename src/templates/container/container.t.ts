@@ -30,3 +30,15 @@ export const ${capitalize(params.containerName)}Container = connect(
 )(${capitalize(params.containerName)});
 `);
 }
+
+export function generateContainerTest(params: ContainerTemplateParams): string {
+    return (
+        `
+describe("Container -> ${capitalize(params.containerName)}", () => {
+    it("should render", () => {
+        expect(false).toBeTruthy();
+    });
+});
+`
+    );
+}

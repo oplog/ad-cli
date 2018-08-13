@@ -1,8 +1,8 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { logger } from "../logger";
-import { pathExists, targetPaths } from "../paths";
-import { generateContainer } from "../templates/container";
+import { pathExists, targetPaths, testPath } from "../paths";
+import { generateContainer, generateContainerTest } from "../templates/container";
 import { generateExport } from "../templates/export.t";
 import { capitalize } from "../templates/string.utils";
 import { Command } from "./Command";
@@ -28,6 +28,7 @@ export class GenerateContainerCommand extends Command {
         }
 
         const containerCode = generateContainer({ containerName: name });
+        const containerTestCode = generateContainerTest({ containerName: name });
         const exportCode = generateExport(`${capitalize(name)}Container`);
 
         logger.info(`Generating ${name} container ..`);
@@ -49,6 +50,12 @@ export class GenerateContainerCommand extends Command {
             `${capitalize(name)}Container.tsx`,
         );
 
+        const containerTestFilePath = path.join(
+            testPath,
+            "containers",
+            `${capitalize(name)}Container.test.tsx`,
+        );
+
         if (pathExists(containerFilePath)) {
             logger.error(`Container "${name}" already exists at path: ${containerFilePath}`);
             return;
@@ -56,6 +63,7 @@ export class GenerateContainerCommand extends Command {
 
         // create & write file
         fs.outputFileSync(containerFilePath, containerCode);
+        fs.outputFileSync(containerTestFilePath, containerTestCode);
         fs.appendFileSync(containerExportFilePath, exportCode);
         fs.appendFileSync(containerExportFolderPath, exportCode);
         // write code on file
