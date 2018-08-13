@@ -8,7 +8,7 @@ export function generateContainer(params: ContainerTemplateParams): string {
         `
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StoreState } from "src/store";
+import { StoreState } from "@store";
 
 function mapStateToProps(state: StoreState): Partial<${capitalize(params.containerName)}Props> {
     return {
