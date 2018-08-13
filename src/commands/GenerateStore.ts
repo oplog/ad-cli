@@ -7,8 +7,8 @@ import { generateActions } from "../templates/store/actions.t";
 import { generateConstants } from "../templates/store/constants.t";
 import { generateReducer } from "../templates/store/reducer.t";
 import { generateSaga } from "../templates/store/saga.t";
-import { Command } from "./Command";
 import { lowerize } from "../templates/string.utils";
+import { Command } from "./Command";
 
 export class GenerateStoreCommand extends Command {
 
