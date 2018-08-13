@@ -85,6 +85,7 @@ export class GenerateComponentCommand extends Command {
         fs.appendFileSync(component.exportFolderPath, component.exportCode);
 
         logger.info(`Component ${this.type} created at: ${component.componentFilePath}`);
+        logger.info(`Container test ${this.type} created at: ${component.componentTestFilePath}`);
     }
 
 }
