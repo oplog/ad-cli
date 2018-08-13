@@ -2,7 +2,7 @@ import { capitalize, uppercase } from "../string.utils";
 
 export function generateActions(name: string) {
     return (
-`
+        `
 import * as constants from "./constants";
 
 export interface Set${capitalize(name)} {
@@ -28,6 +28,18 @@ export function remove${capitalize(name)}(): Remove${capitalize(name)} {
         type: constants.REMOVE_${uppercase(name)},
     };
 }
+`
+    );
+}
+
+export function generateActionsTest(name: string): string {
+    return (
+        `
+describe("Store actions -> ${name}", () => {
+    it("should generate actions", () => {
+        expect(false).toBeTruthy();
+    });
+});
 `
     );
 }

@@ -19,3 +19,15 @@ export function ${name}Reducer(state: any = {}, action: ${capitalize(name)}Actio
 `
     );
 }
+
+export function generateReducerTest(name: string): string {
+    return (
+        `
+describe("Store reducer -> ${name}", () => {
+    it("should correctly modify state", () => {
+        expect(false).toBeTruthy();
+    });
+});
+`
+    );
+}

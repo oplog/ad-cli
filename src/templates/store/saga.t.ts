@@ -26,3 +26,15 @@ export function generateSaga(name: string) {
 `
     );
 }
+
+export function generateSagaTest(name: string): string {
+    return (
+        `
+describe("Store saga -> ${name}", () => {
+    it("should work correctly", () => {
+        expect(false).toBeTruthy();
+    });
+});
+`
+    );
+}
