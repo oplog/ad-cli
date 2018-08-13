@@ -1,8 +1,8 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { logger } from "../logger";
-import { pathExists, targetPaths } from "../paths";
-import { generateComponent } from "../templates/component";
+import { pathExists, targetPaths, testPath } from "../paths";
+import { generateComponent, generateComponentTest } from "../templates/component";
 import { generateExport } from "../templates/export.t";
 import { capitalize } from "../templates/string.utils";
 import { Command } from "./Command";
@@ -41,43 +41,50 @@ export class GenerateComponentCommand extends Command {
             return;
         }
 
-        const componentCode = generateComponent({ componentName });
-        const exportCode = generateExport(componentName);
+        const component = {
+            componentCode: generateComponent({ componentName }),
+            componentTestCode: generateComponentTest({ componentName }),
+            componentTestFilePath: path.join(
+                testPath,
+                "components",
+                `${this.type}s`,
+                `${componentName}.test.tsx`,
+            ),
+            exportCode: generateExport(componentName),
+            exportFolderPath: path.join(
+                targetPaths.components,
+                `${this.type}s`,
+                "index.ts",
+            ),
+            exportFilePath: path.join(
+                targetPaths.components,
+                `${this.type}s`,
+                componentName,
+                "index.ts",
+            ),
+            componentFilePath: path.join(
+                targetPaths.components,
+                `${this.type}s`,
+                componentName,
+                `${componentName}.tsx`,
+            ),
+        };
 
         logger.info(`Generating ${this.type} component..`);
 
-        const componentExportFolderPath = path.join(
-            targetPaths.components,
-            `${this.type}s`,
-            "index.ts",
-        );
-
-        const componentExportFilePath = path.join(
-            targetPaths.components,
-            `${this.type}s`,
-            componentName,
-            "index.ts",
-        );
-
-        const componentFilePath = path.join(
-            targetPaths.components,
-            `${this.type}s`,
-            componentName,
-            `${componentName}.tsx`,
-        );
-
         // check if duplicate component is being created
-        if (pathExists(componentFilePath)) {
-            logger.error(`Component "${componentName}" does already exist at path: ${componentFilePath}`);
+        if (pathExists(component.componentFilePath)) {
+            logger.error(`Component "${componentName}" does already exist at path: ${component.componentFilePath}`);
             return;
         }
 
         // create & write file
-        fs.outputFileSync(componentFilePath, componentCode);
-        fs.appendFileSync(componentExportFilePath, exportCode);
-        fs.appendFileSync(componentExportFolderPath, exportCode);
+        fs.outputFileSync(component.componentFilePath, component.componentCode);
+        fs.outputFileSync(component.componentTestFilePath, component.componentTestCode);
+        fs.appendFileSync(component.exportFilePath, component.exportCode);
+        fs.appendFileSync(component.exportFolderPath, component.exportCode);
 
-        logger.info(`Component ${this.type} created at: ${componentFilePath}`);
+        logger.info(`Component ${this.type} created at: ${component.componentFilePath}`);
     }
 
 }
