@@ -1,13 +1,14 @@
 import fs from "fs-extra";
 import * as path from "path";
 import { logger } from "../logger";
-import { targetPaths } from "../paths";
+import { pathExists, targetPaths } from "../paths";
 import { generateExport } from "../templates/export.t";
 import { generateActions } from "../templates/store/actions.t";
 import { generateConstants } from "../templates/store/constants.t";
 import { generateReducer } from "../templates/store/reducer.t";
 import { generateSaga } from "../templates/store/saga.t";
 import { Command } from "./Command";
+import { lowerize } from "../templates/string.utils";
 
 export class GenerateStoreCommand extends Command {
 
@@ -29,6 +30,19 @@ export class GenerateStoreCommand extends Command {
 
     public action = (name: string) => {
 
+        const storeName = lowerize(name);
+
+        if (!this.checkRequiredFiles()) {
+            return;
+        }
+
+        // Check if store folder previously exists
+        const storeFolder = path.join(targetPaths.store, storeName);
+        if (pathExists(storeFolder)) {
+            logger.error(`Store folder already exists at ${storeFolder}`);
+            return;
+        }
+
         const store: {
             [key: string]: {
                 src: string,
@@ -38,28 +52,28 @@ export class GenerateStoreCommand extends Command {
             };
         } = {
             constants: {
-                src: generateConstants(name),
+                src: generateConstants(storeName),
                 export: generateExport("constants"),
-                srcTargetPath: path.join(targetPaths.store, name, "constants.ts"),
-                exportTargetPath: path.join(targetPaths.store, name, "index.ts"),
+                srcTargetPath: path.join(targetPaths.store, storeName, "constants.ts"),
+                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
             },
             actions: {
-                src: generateActions(name),
+                src: generateActions(storeName),
                 export: generateExport("actions"),
-                srcTargetPath: path.join(targetPaths.store, name, "actions.ts"),
-                exportTargetPath: path.join(targetPaths.store, name, "index.ts"),
+                srcTargetPath: path.join(targetPaths.store, storeName, "actions.ts"),
+                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
             },
             reducer: {
-                src: generateReducer(name),
+                src: generateReducer(storeName),
                 export: generateExport("reducer"),
-                srcTargetPath: path.join(targetPaths.store, name, "reducer.ts"),
-                exportTargetPath: path.join(targetPaths.store, name, "index.ts"),
+                srcTargetPath: path.join(targetPaths.store, storeName, "reducer.ts"),
+                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
             },
             saga: {
-                src: generateSaga(name),
+                src: generateSaga(storeName),
                 export: generateExport("actions"),
-                srcTargetPath: path.join(targetPaths.store, name, "saga.ts"),
-                exportTargetPath: path.join(targetPaths.store, name, "index.ts"),
+                srcTargetPath: path.join(targetPaths.store, storeName, "saga.ts"),
+                exportTargetPath: path.join(targetPaths.store, storeName, "index.ts"),
             },
         };
 
@@ -71,14 +85,6 @@ export class GenerateStoreCommand extends Command {
             fs.outputFileSync(storeItem.exportTargetPath, storeItem.export);
             logger.info(`export is created at: ${storeItem.exportTargetPath}`);
         });
-
-        // create & write file
-        // fs.outputFileSync(componentFilePath, componentCode);
-        // fs.appendFileSync(componentExportFilePath, exportCode);
-        // fs.appendFileSync(componentExportFolderPath, exportCode);
-        // write code on file
-
-        // logger.info(`Component ${this.type} created at: ${componentFilePath}`);
     }
 
 }

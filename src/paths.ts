@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import * as path from "path";
 
 export const cwd = process.cwd();
@@ -14,3 +15,9 @@ export const targetPaths = {
     store: path.join(cwd, "src", "store"),
     containers: path.join(cwd, "src", "containers"),
 };
+
+export const configPath = path.join(cwd, "ad-cli.config.json");
+
+export function pathExists(p: string): boolean {
+    return fs.existsSync(p);
+}

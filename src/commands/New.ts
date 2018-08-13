@@ -50,6 +50,7 @@ export class NewCommand extends Command {
             logger.info("App created successfully.");
         } else {
             logger.error("App cannot be created.");
+            return;
         }
 
         logger.info("Installing dependencies...");

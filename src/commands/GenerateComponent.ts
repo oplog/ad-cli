@@ -1,9 +1,10 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { logger } from "../logger";
-import { targetPaths } from "../paths";
+import { pathExists, targetPaths } from "../paths";
 import { generateComponent } from "../templates/component";
 import { generateExport } from "../templates/export.t";
+import { capitalize } from "../templates/string.utils";
 import { Command } from "./Command";
 
 export type ComponentType = (
@@ -33,12 +34,17 @@ export class GenerateComponentCommand extends Command {
     }
 
     public action = (name: string) => {
-        const componentCode = generateComponent({componentName: name});
-        const exportCode = generateExport(name);
+
+        const componentName = capitalize(name);
+
+        if (!this.checkRequiredFiles()) {
+            return;
+        }
+
+        const componentCode = generateComponent({ componentName });
+        const exportCode = generateExport(componentName);
 
         logger.info(`Generating ${this.type} component..`);
-
-        // TODO: Add check for duplicate component name
 
         const componentExportFolderPath = path.join(
             targetPaths.components,
@@ -49,22 +55,27 @@ export class GenerateComponentCommand extends Command {
         const componentExportFilePath = path.join(
             targetPaths.components,
             `${this.type}s`,
-            name,
+            componentName,
             "index.ts",
         );
 
         const componentFilePath = path.join(
             targetPaths.components,
             `${this.type}s`,
-            name,
-            `${name}.tsx`,
+            componentName,
+            `${componentName}.tsx`,
         );
+
+        // check if duplicate component is being created
+        if (pathExists(componentFilePath)) {
+            logger.error(`Component "${componentName}" does already exist at path: ${componentFilePath}`);
+            return;
+        }
 
         // create & write file
         fs.outputFileSync(componentFilePath, componentCode);
         fs.appendFileSync(componentExportFilePath, exportCode);
         fs.appendFileSync(componentExportFolderPath, exportCode);
-        // write code on file
 
         logger.info(`Component ${this.type} created at: ${componentFilePath}`);
     }
