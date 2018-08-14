@@ -15,3 +15,7 @@ export const templatePaths = {
 export function pathExists(p: string): boolean {
     return fs.existsSync(p);
 }
+
+export function resolvePath(appPath: string, pathTemplate: string): string {
+    return pathTemplate.replace("<projectDir>", appPath);
+}

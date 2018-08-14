@@ -44,9 +44,11 @@ export class GenerateStoreCommand extends Command {
             return;
         }
 
+        const config = this.config(appPath);
+
         // Check if store folder previously exists
-        const storeFolder = path.join(appPath, "src", "store", storeName);
-        const storeTestFolder = path.join(appPath, "__tests__", "store", storeName);
+        const storeFolder = path.join(config.paths.store, storeName);
+        const storeTestFolder = path.join(config.paths.tests, "store", storeName);
         if (pathExists(storeFolder)) {
             logger.error(`Store folder already exists at ${storeFolder}`);
             return;

@@ -37,27 +37,28 @@ export class GenerateContainerCommand extends Command {
             return;
         }
 
-        const containersPath = path.join(appPath, "src", "containers");
+        const config = this.config(appPath);
+
         const containerCode = generateContainer({ containerName: name });
         const containerTestCode = generateContainerTest({ containerName: name });
-        const containerTestPath = path.join(appPath, "__tests__", "containers");
+        const containerTestPath = path.join(config.paths.tests, "containers");
         const exportCode = generateExport(`${capitalize(name)}Container`);
 
         logger.info(`Generating ${name} container..`);
 
         const containerExportFolderPath = path.join(
-            containersPath,
+            config.paths.containers,
             "index.ts",
         );
 
         const containerExportFilePath = path.join(
-            containersPath,
+            config.paths.containers,
             `${capitalize(name)}Container`,
             "index.ts",
         );
 
         const containerFilePath = path.join(
-            containersPath,
+            config.paths.containers,
             `${capitalize(name)}Container`,
             `${capitalize(name)}Container.tsx`,
         );

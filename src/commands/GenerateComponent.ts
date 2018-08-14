@@ -40,38 +40,35 @@ export class GenerateComponentCommand extends Command {
             appPath = path.join(cwd, appPath);
         }
 
-        const componentsPath = path.join(appPath, "src", "components");
-        const componentTestPath = path.join(appPath, "__tests__");
-        const componentName = capitalize(name);
-
         if (!this.checkRequiredFiles(appPath)) {
             return;
         }
+
+        const config = this.config(appPath);
+        console.log(config.paths.tests);
+        const componentName = capitalize(name);
 
         const component = {
             componentCode: generateComponent({ componentName }),
             componentTestCode: generateComponentTest({ componentName }),
             componentTestFilePath: path.join(
-                componentTestPath,
+                config.paths.tests,
                 "components",
                 `${this.type}s`,
                 `${componentName}.test.tsx`,
             ),
             exportCode: generateExport(componentName),
             exportFolderPath: path.join(
-                componentsPath,
-                `${this.type}s`,
+                config.paths.components[`${this.type}s`],
                 "index.ts",
             ),
             exportFilePath: path.join(
-                componentsPath,
-                `${this.type}s`,
+                config.paths.components[`${this.type}s`],
                 componentName,
                 "index.ts",
             ),
             componentFilePath: path.join(
-                componentsPath,
-                `${this.type}s`,
+                config.paths.components[`${this.type}s`],
                 componentName,
                 `${componentName}.tsx`,
             ),
@@ -91,8 +88,8 @@ export class GenerateComponentCommand extends Command {
         fs.appendFileSync(component.exportFilePath, component.exportCode);
         fs.appendFileSync(component.exportFolderPath, component.exportCode);
 
-        logger.info(`Component ${this.type} created at: ${component.componentFilePath}`);
-        logger.info(`Container test ${this.type} created at: ${component.componentTestFilePath}`);
+        logger.info(`Component created at: ${component.componentFilePath}`);
+        logger.info(`Component test created at: ${component.componentTestFilePath}`);
     }
 
 }
