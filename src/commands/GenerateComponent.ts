@@ -45,7 +45,6 @@ export class GenerateComponentCommand extends Command {
         }
 
         const config = this.config(appPath);
-        console.log(config.paths.tests);
         const componentName = capitalize(name);
 
         const component = {
