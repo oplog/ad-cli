@@ -6,8 +6,8 @@ import { logger } from "../logger";
 import { pathExists, resolvePath } from "../paths";
 import { Option } from "./Option";
 
-const AD_CLI_CONFIG_FILE = "ad-cli.config.json";
-const AD_CLI_DEFAULT_CONFIG_FILE = "ad-cli.config.default.json";
+export const AD_CLI_CONFIG_FILE = "ad-cli.config.json";
+export const AD_CLI_DEFAULT_CONFIG_FILE = "ad-cli.config.default.json";
 
 export abstract class Command {
 
