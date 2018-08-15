@@ -1,4 +1,5 @@
 {
+    "note": "DO NOT MODIFY THIS FILE",
     "paths": {
         "components": {
             "atoms": "<projectDir>/src/components/atoms",
