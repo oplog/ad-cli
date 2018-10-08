@@ -77,7 +77,6 @@ export class GenerateContainerCommand extends Command {
         fs.outputFileSync(containerFilePath, containerCode);
         fs.outputFileSync(containerTestFilePath, containerTestCode);
         fs.appendFileSync(containerExportFilePath, exportCode);
-        fs.appendFileSync(containerExportFolderPath, exportCode);
 
         logger.info(`Container created at: ${containerFilePath}`);
         logger.info(`Container test created at: ${containerTestFilePath}`);
