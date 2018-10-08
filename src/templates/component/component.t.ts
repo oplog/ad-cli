@@ -33,10 +33,19 @@ export class ${params.componentName} extends React.Component<${params.componentN
 export function generateComponentTest(params: ComponentTemplateParams): string {
   return (
 `
+import { ${params.componentName}, ${params.componentName}Props } from "@components";
+import { shallow } from "enzyme";
+import * as React from "react";
+
 describe("Component -> ${params.componentName}", () => {
-    it("should render", () => {
-        expect(false).toBeTruthy();
-    });
+
+  const props: ${params.componentName}Props = {};
+
+  it("should render", () => {
+        const wrapper = shallow(<${params.componentName} {...props} />);
+        expect(wrapper).toHaveLength(1);
+  });
+
 });
 `
   );
