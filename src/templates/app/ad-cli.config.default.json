@@ -2,6 +2,7 @@
     "note": "DO NOT MODIFY THIS FILE",
     "paths": {
         "components": {
+            "index": "<projectDir>/src/components/index.ts",
             "atoms": "<projectDir>/src/components/atoms",
             "molecules": "<projectDir>/src/components/molecules",
             "organisms": "<projectDir>/src/components/organisms",

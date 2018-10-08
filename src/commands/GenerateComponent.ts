@@ -87,6 +87,14 @@ export class GenerateComponentCommand extends Command {
         fs.appendFileSync(component.exportFilePath, component.exportCode);
         fs.appendFileSync(component.exportFolderPath, component.exportCode);
 
+        // read & replace root export of components/index.ts
+        let rootComponentExportContent = fs.readFileSync(config.paths.components.index).toString();
+        rootComponentExportContent = rootComponentExportContent.replace(
+            `// export * from "./${this.type}s";`,
+            `export * from "./${this.type}s";`,
+        );
+        fs.writeFileSync(config.paths.components.index, rootComponentExportContent);
+
         logger.info(`Component created at: ${component.componentFilePath}`);
         logger.info(`Component test created at: ${component.componentTestFilePath}`);
     }

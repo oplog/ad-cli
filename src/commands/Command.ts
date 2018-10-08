@@ -33,6 +33,7 @@ export abstract class Command {
         return {
             paths: {
                 components: {
+                    index: resolvePath(appPath, config.paths.components.index),
                     atoms: resolvePath(appPath, config.paths.components.atoms),
                     molecules: resolvePath(appPath, config.paths.components.molecules),
                     organisms: resolvePath(appPath, config.paths.components.organisms),
