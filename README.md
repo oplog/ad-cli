@@ -16,8 +16,9 @@ https://github.com/Microsoft/TypeScript-React-Starter
 The default app template of ad cli is the following;
 ```
 .
+.
+├── ad-cli.config.default.json
 ├── ad-cli.config.json
-├── app.txt
 ├── config
 │   ├── aliases.js
 │   ├── env.js
@@ -47,12 +48,19 @@ The default app template of ad cli is the following;
 │   │   ├── App.test.tsx
 │   │   ├── App.tsx
 │   │   ├── atoms
+│   │   │   ├── Button
+│   │   │   │   ├── Button.tsx
+│   │   │   │   └── index.ts
+│   │   │   └── index.ts
 │   │   ├── index.ts
 │   │   ├── molecules
 │   │   ├── organisms
 │   │   ├── pages
 │   │   └── templates
 │   ├── containers
+│   │   └── ButtonContainer
+│   │       ├── ButtonContainer.tsx
+│   │       └── index.ts
 │   ├── index.css
 │   ├── index.tsx
 │   ├── logo.svg
@@ -60,12 +68,21 @@ The default app template of ad cli is the following;
 │   └── store
 │       ├── index.ts
 │       └── utils.ts
+├── __tests__
+│   ├── components
+│   │   └── atoms
+│   │       └── Button.test.tsx
+│   ├── containers
+│   │   └── ButtonContainer.test.tsx
+│   ├── setupTests.js
+│   └── utils.ts
+├── tree.md
 ├── tsconfig.json
 ├── tsconfig.prod.json
 ├── tsconfig.test.json
 └── tslint.json
 
-13 directories, 35 files
+19 directories, 45 files
 ```
 The template is basically an ejected create react app with a few folders created
 
