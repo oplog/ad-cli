@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 import program from "commander";
+import * as fs from "fs";
+import * as path from "path";
 import {
     GenerateComponentCommand,
     InitCommand,
@@ -10,7 +12,8 @@ import { Command } from "./commands/Command";
 import { GenerateContainerCommand } from "./commands/GenerateContainer";
 import { GenerateStoreCommand } from "./commands/GenerateStore";
 
-const VERSION = "0.1.0";
+const packageConfig = fs.readFileSync(path.join(__dirname, "..", "package.json")).toString();
+const VERSION = JSON.parse(packageConfig).version;
 
 const commands: Command[] = [
   new NewCommand(),

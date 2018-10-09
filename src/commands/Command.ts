@@ -47,6 +47,23 @@ export abstract class Command {
         };
     }
 
+    protected resolveProjectPath(cwd: string): string {
+        const file = AD_CLI_CONFIG_FILE;
+        const cwdPieces = cwd.split(path.sep);
+
+        while (cwdPieces.length > 0) {
+
+            const projectPath = path.join(...cwdPieces, file);
+            if (pathExists(projectPath)) {
+                return projectPath;
+            }
+
+            cwdPieces.splice(-1, 1);
+        }
+
+        throw new Error(`Could not find project path with ${file} file`);
+    }
+
     protected checkRequiredFiles(appPath: string): boolean {
         const configPath = path.join(appPath, AD_CLI_CONFIG_FILE);
         if (pathExists(configPath)) {
