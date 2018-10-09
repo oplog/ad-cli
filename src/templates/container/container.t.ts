@@ -36,14 +36,16 @@ export function generateContainerTest(params: ContainerTemplateParams): string {
     return (
         `
 import { ${capitalize(params.containerName)}Container } from "@containers/${capitalize(params.containerName)}Container";
-import { shallow } from "enzyme";
 import * as React from "react";
+import { createMockStore, shallowWithStore } from "../utils";
 
 describe("Container -> ${capitalize(params.containerName)}Container", () => {
 
+  const store = createMockStore({});
+
   it("should render", () => {
-        const wrapper = shallow(<${capitalize(params.containerName)}Container />);
-        expect(wrapper).toHaveLength(1);
+    const wrapper = shallowWithStore(<${capitalize(params.containerName)}Container />, store);
+    expect(wrapper).toHaveLength(1);
   });
 
 });
