@@ -88,11 +88,11 @@ The template is basically an ejected create react app with a few folders created
 
 ## Getting started
 Install ad-cli package globally
-`$ npm install -g ad-cli`
+`$ npm install -g atomic-design-cli`
 
 You can also clone and link locally
 ```
-$ git clone git@github.com:aacanakin/ad-cli.git
+$ git clone git@github.com:oplog/ad-cli.git
 $ cd ad-cli
 $ npm install
 $ npm run build
