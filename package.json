@@ -1,6 +1,6 @@
 {
   "name": "atomic-design-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An opinionated app structure using typescript,atomic design,redux and many more",
   "main": "dist/cli.js",
   "homepage": "https://github.com/oplog/ad-cli",
