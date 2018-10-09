@@ -1,7 +1,7 @@
 {
   "name": "ad-cli",
   "version": "0.1.0",
-  "description": "Atomic Design with redux store typescript and many more",
+  "description": "An opinionated app structure using typescript,atomic design,redux and many more",
   "main": "dist/cli.js",
   "scripts": {
     "lint": "tslint -c tslint.json -p tsconfig.json",
@@ -9,7 +9,7 @@
     "cli": "tsc && node dist/cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "OPLOG <info@oplog.com.tr> (https://github.com/oplog/ad-cli)",
   "license": "MIT",
   "dependencies": {
     "commander": "^2.15.1",
