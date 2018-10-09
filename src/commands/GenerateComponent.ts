@@ -35,16 +35,13 @@ export class GenerateComponentCommand extends Command {
     }
 
     public action = (name: string, options: any) => {
-        let appPath: string = options.path || cwd;
-        if (!path.isAbsolute(appPath)) {
-            appPath = path.join(cwd, appPath);
-        }
+        const projectPath: string = this.resolveProjectPath(options.path);
 
-        if (!this.checkRequiredFiles(appPath)) {
+        if (!this.checkRequiredFiles(projectPath)) {
             return;
         }
 
-        const config = this.config(appPath);
+        const config = this.config(projectPath);
         const componentName = capitalize(name);
 
         const component = {

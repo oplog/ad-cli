@@ -28,16 +28,13 @@ export class GenerateContainerCommand extends Command {
 
     public action = (name: string, options: any) => {
 
-        let appPath: string = options.path || cwd;
-        if (!path.isAbsolute(appPath)) {
-            appPath = path.join(cwd, appPath);
-        }
+        const projectPath: string = this.resolveProjectPath(options.path);
 
-        if (!this.checkRequiredFiles(appPath)) {
+        if (!this.checkRequiredFiles(projectPath)) {
             return;
         }
 
-        const config = this.config(appPath);
+        const config = this.config(projectPath);
 
         const containerCode = generateContainer({ containerName: name });
         const containerTestCode = generateContainerTest({ containerName: name });
@@ -45,11 +42,6 @@ export class GenerateContainerCommand extends Command {
         const exportCode = generateExport(`${capitalize(name)}Container`);
 
         logger.info(`Generating ${name} container..`);
-
-        const containerExportFolderPath = path.join(
-            config.paths.containers,
-            "index.ts",
-        );
 
         const containerExportFilePath = path.join(
             config.paths.containers,

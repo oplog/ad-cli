@@ -1,6 +1,6 @@
 {
   "name": "atomic-design-cli",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "An opinionated app structure using typescript,atomic design,redux and many more",
   "main": "dist/cli.js",
   "homepage": "https://github.com/oplog/ad-cli",
@@ -10,7 +10,7 @@
     "cli": "tsc && node dist/cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "OPLOG <info@oplog.com.tr> (https://github.com/oplog/ad-cli)",
+  "author": "OPLOG <info@oplog.com.tr> (https://github.com/oplog)",
   "license": "MIT",
   "dependencies": {
     "commander": "^2.15.1",

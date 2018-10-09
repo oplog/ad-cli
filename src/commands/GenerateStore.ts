@@ -33,18 +33,15 @@ export class GenerateStoreCommand extends Command {
 
     public action = (name: string, options: any) => {
 
-        let appPath: string = options.path || cwd;
-        if (!path.isAbsolute(appPath)) {
-            appPath = path.join(cwd, appPath);
-        }
+        const projectPath: string = this.resolveProjectPath(options.path);
 
         const storeName = lowerize(name);
 
-        if (!this.checkRequiredFiles(appPath)) {
+        if (!this.checkRequiredFiles(projectPath)) {
             return;
         }
 
-        const config = this.config(appPath);
+        const config = this.config(projectPath);
 
         // Check if store folder previously exists
         const storeFolder = path.join(config.paths.store, storeName);

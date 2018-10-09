@@ -3,7 +3,7 @@ import { merge } from "lodash";
 import * as path from "path";
 import { Config } from "../config";
 import { logger } from "../logger";
-import { pathExists, resolvePath } from "../paths";
+import { cwd, pathExists, resolvePath } from "../paths";
 import { Option } from "./Option";
 
 export const AD_CLI_CONFIG_FILE = "ad-cli.config.json";
@@ -47,25 +47,33 @@ export abstract class Command {
         };
     }
 
-    protected resolveProjectPath(cwd: string): string {
-        const file = AD_CLI_CONFIG_FILE;
-        const cwdPieces = cwd.split(path.sep);
+    protected resolveProjectPath(inputPath: string): string {
 
-        while (cwdPieces.length > 0) {
+        if (!path.isAbsolute(inputPath)) {
+            inputPath = path.join(cwd, inputPath);
+        }
 
-            const projectPath = path.join(...cwdPieces, file);
-            if (pathExists(projectPath)) {
+        const pathPieces = [ path.sep, ...inputPath.split(path.sep) ];
+
+        logger.info("Resolving project path..");
+
+        while (pathPieces.length > 0) {
+
+            const configPath = path.join(...pathPieces, AD_CLI_CONFIG_FILE);
+            if (pathExists(configPath)) {
+                const projectPath = path.join(path.sep, ...pathPieces);
+                logger.info(`Project path: ${projectPath}`);
                 return projectPath;
             }
 
-            cwdPieces.splice(-1, 1);
+            pathPieces.splice(-1, 1);
         }
 
-        throw new Error(`Could not find project path with ${file} file`);
+        throw new Error(`Could not find project path with ${AD_CLI_CONFIG_FILE} file`);
     }
 
-    protected checkRequiredFiles(appPath: string): boolean {
-        const configPath = path.join(appPath, AD_CLI_CONFIG_FILE);
+    protected checkRequiredFiles(projectPath: string): boolean {
+        const configPath = path.join(projectPath, AD_CLI_CONFIG_FILE);
         if (pathExists(configPath)) {
             return true;
         }
