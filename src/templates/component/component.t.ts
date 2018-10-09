@@ -42,8 +42,8 @@ describe("Component -> ${params.componentName}", () => {
   const props: ${params.componentName}Props = {};
 
   it("should render", () => {
-        const wrapper = shallow(<${params.componentName} {...props} />);
-        expect(wrapper).toHaveLength(1);
+    const wrapper = shallow(<${params.componentName} {...props} />);
+    expect(wrapper).toHaveLength(1);
   });
 
 });
