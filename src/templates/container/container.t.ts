@@ -6,10 +6,10 @@ export interface ContainerTemplateParams {
 export function generateContainer(params: ContainerTemplateParams): string {
     return (
         `
+import { ${capitalize(params.containerName)}, ${capitalize(params.containerName)}Props } from "@components";
+import { StoreState } from "@store";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StoreState } from "@store";
-import { ${capitalize(params.containerName)} } from "@components";
 
 function mapStateToProps(state: StoreState): Partial<${capitalize(params.containerName)}Props> {
     return {
