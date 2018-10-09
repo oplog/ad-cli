@@ -1,6 +1,6 @@
 {
   "name": "atomic-design-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An opinionated app structure using typescript,atomic design,redux and many more",
   "main": "dist/cli.js",
   "scripts": {
